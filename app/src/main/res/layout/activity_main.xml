@@ -1,11 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.momo.lingke.view.CircleMenuLayout
+        android:id="@+id/id_menulayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/circle_bg3"
+        android:padding="100dp">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@id/id_circle_menu_item_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="104.0dip"
+                android:layout_height="104.0dip"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/turnplate_center_unlogin" />
+
+            <ImageView
+                android:layout_width="116.0dip"
+                android:layout_height="116.0dip"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/turnplate_mask_unlogin_normal" />
+        </RelativeLayout>
+    </com.momo.lingke.view.CircleMenuLayout>
+
+</LinearLayout>
