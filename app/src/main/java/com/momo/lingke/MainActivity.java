@@ -13,17 +13,18 @@ import com.momo.lingke.view.CircleMenuLayout;
 public class MainActivity extends ActionBarActivity {
     private CircleMenuLayout mCircleMenuLayout;
 
-    private String[] mItemTexts = new String[]{"安全中心 ", "特色服务", "投资理财",
-            "转账汇款", "我的账户", "信用卡"};
-    private int[] mItemImgs = new int[]{R.mipmap.home_mbank_1_normal,
-            R.mipmap.home_mbank_2_normal, R.mipmap.home_mbank_3_normal,
-            R.mipmap.home_mbank_4_normal, R.mipmap.home_mbank_5_normal,
-            R.mipmap.home_mbank_6_normal};
+    private String[] mItemTexts = new String[]{"添加 ", "添加", "电话",
+            "信息", "联系人", "邮件"};
+    private int[] mItemImgs = new int[]{R.mipmap.mobile_icon,
+            R.mipmap.mobile_icon, R.mipmap.mobile_icon,
+            R.mipmap.mms_icon, R.mipmap.contacts_icon,
+            R.mipmap.message_icon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
         mCircleMenuLayout = (CircleMenuLayout) findViewById(R.id.id_menulayout);
         mCircleMenuLayout.setMenuItemIconsAndTexts(mItemImgs, mItemTexts);
         mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener() {
@@ -32,7 +33,6 @@ public class MainActivity extends ActionBarActivity {
             public void itemClick(View view, int pos) {
                 Toast.makeText(MainActivity.this, mItemTexts[pos],
                         Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -40,10 +40,8 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this,
                         "you can do something just like ccb  ",
                         Toast.LENGTH_SHORT).show();
-
             }
         });
-
     }
 
     @Override
@@ -54,9 +52,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }

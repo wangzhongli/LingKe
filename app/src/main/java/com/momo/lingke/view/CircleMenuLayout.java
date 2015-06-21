@@ -1,6 +1,7 @@
 package com.momo.lingke.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import com.momo.lingke.R;
 
 /**
  * <pre>
- * @author zhy 
+ * @author zhy
  * http://blog.csdn.net/lmj623565791/article/details/43131133
  * </pre>
  */
@@ -544,9 +545,6 @@ public class CircleMenuLayout extends ViewGroup
 
 	/**
 	 * 自动滚动的任务
-	 * 
-	 * @author zhy
-	 * 
 	 */
 	private class AutoFlingRunnable implements Runnable
 	{
@@ -577,4 +575,8 @@ public class CircleMenuLayout extends ViewGroup
 		}
 	}
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+    }
 }
