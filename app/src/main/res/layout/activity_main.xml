@@ -67,8 +67,8 @@
 
     <com.momo.lingke.view.CircleMenuLayout
         android:id="@+id/id_menulayout"
-        android:layout_width="350dip"
-        android:layout_height="350dip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@mipmap/circle_bg3"
         android:layout_marginTop="60dip"
         android:padding="100dp">

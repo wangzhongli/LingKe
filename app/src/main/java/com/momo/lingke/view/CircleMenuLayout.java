@@ -58,7 +58,7 @@ public class CircleMenuLayout extends ViewGroup
 	/**
 	 * 布局时的开始角度
 	 */
-	private double mStartAngle = 0;
+	private double mStartAngle = 30;
 	/**
 	 * 菜单项的文本
 	 */
@@ -97,7 +97,7 @@ public class CircleMenuLayout extends ViewGroup
 	}
 
 	/**
-	 * 设置布局的宽高，并策略menu item宽高
+	 * 设置布局的宽高，并测量menu item宽高
 	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)

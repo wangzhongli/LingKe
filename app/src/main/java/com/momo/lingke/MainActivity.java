@@ -1,7 +1,7 @@
 package com.momo.lingke;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.momo.lingke.view.CircleMenuLayout;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
     private CircleMenuLayout mCircleMenuLayout;
 
     private String[] mItemTexts = new String[]{"添加 ", "添加", "电话",
