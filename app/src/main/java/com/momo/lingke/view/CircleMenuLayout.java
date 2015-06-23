@@ -41,12 +41,10 @@ public class CircleMenuLayout extends ViewGroup
 	 * 当每秒移动角度达到该值时，认为是快速移动
 	 */
 	private static final int FLINGABLE_VALUE = 300;
-
 	/**
 	 * 如果移动角度达到该值，则屏蔽点击
 	 */
 	private static final int NOCLICK_VALUE = 3;
-
 	/**
 	 * 当每秒移动角度达到该值时，认为是快速移动
 	 */
@@ -67,12 +65,10 @@ public class CircleMenuLayout extends ViewGroup
 	 * 菜单项的图标
 	 */
 	private int[] mItemImgs;
-
 	/**
 	 * 菜单的个数
 	 */
 	private int mMenuItemCount;
-
 	/**
 	 * 检测按下到抬起时旋转的角度
 	 */
@@ -81,7 +77,6 @@ public class CircleMenuLayout extends ViewGroup
 	 * 检测按下到抬起时使用的时间
 	 */
 	private long mDownTime;
-
 	/**
 	 * 判断是否正在自动滚动
 	 */
