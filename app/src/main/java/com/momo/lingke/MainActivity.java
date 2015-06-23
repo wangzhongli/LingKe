@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         mCircleMenuLayout = (CircleMenuLayout) findViewById(R.id.id_menulayout);
