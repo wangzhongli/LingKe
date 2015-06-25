@@ -165,10 +165,8 @@ public class CircleMenuLayout extends ViewGroup {
      */
     public interface OnMenuItemClickListener {
         void itemClick(View view, int pos);
-
         void itemCenterClick(View view);
     }
-
     /**
      * MenuItem的点击事件接口
      */
@@ -183,7 +181,6 @@ public class CircleMenuLayout extends ViewGroup {
             OnMenuItemClickListener mOnMenuItemClickListener) {
         this.mOnMenuItemClickListener = mOnMenuItemClickListener;
     }
-
     /**
      * 设置menu item的位置
      */
