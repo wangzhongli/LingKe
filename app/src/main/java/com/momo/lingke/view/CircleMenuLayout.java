@@ -500,7 +500,7 @@ public class CircleMenuLayout extends ViewGroup {
         paint1.setStyle(Paint.Style.STROKE);
         paint1.setColor(Color.GREEN);
         RectF rectF = new RectF(10, 10, mRadius, mRadius);
-//        canvas.drawCircle(resWidth/2,resHeight/2,mRadius/2-16,paint);
+        canvas.drawCircle(resWidth/2,resHeight/2,mRadius/2-16,paint);
         int sweepAngle = 360 / mMenuItemCount;
         canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
 
