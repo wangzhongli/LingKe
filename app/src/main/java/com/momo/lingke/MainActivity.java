@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity {
         mCircleMenuLayout = (CircleMenuLayout) findViewById(R.id.id_menulayout);
         mCircleMenuLayout.setMenuItemIconsAndTexts(mItemImgs, mItemTexts);
         mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener() {
-
             @Override
             public void itemClick(View view, int pos) {
                 Toast.makeText(MainActivity.this, mItemTexts[pos],
                         Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void itemCenterClick(View view) {
                 Toast.makeText(MainActivity.this,
