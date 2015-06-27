@@ -165,8 +165,10 @@ public class CircleMenuLayout extends ViewGroup {
      */
     public interface OnMenuItemClickListener {
         void itemClick(View view, int pos);
+
         void itemCenterClick(View view);
     }
+
     /**
      * MenuItem的点击事件接口
      */
@@ -181,6 +183,7 @@ public class CircleMenuLayout extends ViewGroup {
             OnMenuItemClickListener mOnMenuItemClickListener) {
         this.mOnMenuItemClickListener = mOnMenuItemClickListener;
     }
+
     /**
      * 设置menu item的位置
      */
@@ -419,7 +422,7 @@ public class CircleMenuLayout extends ViewGroup {
                 });
             }
             if (tv != null) {
-                tv.setVisibility(View.VISIBLE);
+                tv.setVisibility(View.GONE);
                 tv.setText(mItemTexts[i]);
             }
             // 添加view到容器中
@@ -447,6 +450,7 @@ public class CircleMenuLayout extends ViewGroup {
 
     /**
      * 获得默认该layout的尺寸
+     *
      * @return
      */
     private int getDefaultWidth() {
@@ -480,7 +484,6 @@ public class CircleMenuLayout extends ViewGroup {
             angelPerSecond /= 1.0666F;
             postDelayed(this, 30);
             // 重新布局
-            invalidate();
             requestLayout();
         }
     }
@@ -499,13 +502,12 @@ public class CircleMenuLayout extends ViewGroup {
         RectF rectF = new RectF(10, 10, mRadius, mRadius);
 //        canvas.drawCircle(resWidth/2,resHeight/2,mRadius/2-16,paint);
         int sweepAngle = 360 / mMenuItemCount;
-        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
+//        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
 
-        float tmpAngle= mTmpAngle;
+        float tmpAngle = mTmpAngle;
         for (int i = 0; i < mMenuItemCount; i++) {
             canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
             tmpAngle += sweepAngle;
         }
-        invalidate();
     }
 }
