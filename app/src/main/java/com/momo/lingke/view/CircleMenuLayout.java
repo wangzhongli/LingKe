@@ -34,11 +34,11 @@ public class CircleMenuLayout extends ViewGroup {
     /**
      * 菜单的中心child的默认尺寸
      */
-    private float RADIO_DEFAULT_CENTERITEM_DIMENSION = 1 / 3f;
+    private float RADIO_DEFAULT_CENTERITEM_DIMENSION = 1 / 2.3f;
     /**
      * 该容器的内边距,无视padding属性，如需边距请用该变量
      */
-    private static final float RADIO_PADDING_LAYOUT = 1 / 12f;
+    private static final float RADIO_PADDING_LAYOUT = 1 / 36f;
 
     /**
      * 当每秒移动角度达到该值时，认为是快速移动
@@ -295,6 +295,7 @@ public class CircleMenuLayout extends ViewGroup {
                     mStartAngle += start - end;
                     mTmpAngle += start - end;
                 }
+                System.out.println("mStartAngle   " + mStartAngle + "mTmpAngle   " + mTmpAngle);
                 // 重新布局
                 requestLayout();
                 mLastX = x;
@@ -492,22 +493,20 @@ public class CircleMenuLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint paint = new Paint();
-        Paint paint1 = new Paint();
-        paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5);
-        paint1.setStrokeWidth(5);
-        paint1.setStyle(Paint.Style.STROKE);
-        paint1.setColor(Color.GREEN);
-        RectF rectF = new RectF(10, 10, mRadius, mRadius);
-        canvas.drawCircle(resWidth/2,resHeight/2,mRadius/2-16,paint);
+        paint.setStrokeWidth(2);
+//        paint.setARGB(155, 167, 190, 206);
+        paint.setColor(Color.WHITE);
+        RectF rectF = new RectF(0, 0, mRadius, mRadius);
+        canvas.drawCircle(resWidth / 2, resHeight / 2, 90, paint);
+        canvas.drawCircle(resWidth / 2, resHeight / 2, 105, paint);
         int sweepAngle = 360 / mMenuItemCount;
 //        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
-
         float tmpAngle = mTmpAngle;
         for (int i = 0; i < mMenuItemCount; i++) {
             canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
             tmpAngle += sweepAngle;
         }
+
     }
 }
