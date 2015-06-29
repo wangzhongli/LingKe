@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.momo.lingke.view.CircleMenuLayout;
 
 
+
 public class MainActivity extends AppCompatActivity {
     private CircleMenuLayout mCircleMenuLayout;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void itemCenterClick(View view) {
                 Toast.makeText(MainActivity.this,
-                        "you can do something just like ccb  ",
+                        "you can do something  ",
                         Toast.LENGTH_SHORT).show();
             }
         });
