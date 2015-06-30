@@ -5,8 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -86,11 +89,28 @@ public class CircleMenuLayout extends ViewGroup {
     private boolean isFling;
 
     private int mMenuItemLayoutId = R.layout.circle_menu_item;
+    /**
+     * 记录上一次的x，y坐标
+     */
+    private float mLastX;
+    private float mLastY;
+    /**
+     * 自动滚动的Runnable
+     */
+    private AutoFlingRunnable mFlingRunnable;
+
+    //音效
+    private int music;
+    //音效池
+    private SoundPool sp;
 
     public CircleMenuLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         // 无视padding
         setPadding(0, 0, 0, 0);
+        //初始化音效播放
+        sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        music = sp.load(getContext(), R.raw.baidu_beep, 1);
     }
 
     int resWidth = 0;
@@ -245,21 +265,11 @@ public class CircleMenuLayout extends ViewGroup {
         }
     }
 
-    /**
-     * 记录上一次的x，y坐标
-     */
-    private float mLastX;
-    private float mLastY;
-    /**
-     * 自动滚动的Runnable
-     */
-    private AutoFlingRunnable mFlingRunnable;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        // Log.e("TAG", "x = " + x + " , y = " + y);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastX = x;
@@ -284,16 +294,18 @@ public class CircleMenuLayout extends ViewGroup {
                  * 获得当前的角度
                  */
                 float end = getAngle(x, y);
-                // Log.e("TAG", "start = " + start + " , end =" + end);
+                 Log.e("TAG", "start = " + start + " , end =" + end);
                 // 如果是一、四象限，则直接end-start，角度值都是正值
                 if (getQuadrant(x, y) == 1 || getQuadrant(x, y) == 4) {
                     mStartAngle += end - start;
                     mTmpAngle += end - start;
-                } else
-                // 二、三象限，色角度值是负值
-                {
+                } else {// 二、三象限，色角度值是负值
                     mStartAngle += start - end;
                     mTmpAngle += start - end;
+                }
+                System.out.println(mStartAngle);
+                if (((int) Math.abs(mStartAngle)) % 60 == 0) {
+                    playSound();
                 }
                 // 重新布局
                 requestLayout();
@@ -304,8 +316,6 @@ public class CircleMenuLayout extends ViewGroup {
                 // 计算，每秒移动的角度
                 float anglePerSecond = mTmpAngle * 1000
                         / (System.currentTimeMillis() - mDownTime);
-                // Log.e("TAG", anglePrMillionSecond + " , mTmpAngel = " +
-                // mTmpAngle);
                 // 如果达到该值认为是快速移动
                 if (Math.abs(anglePerSecond) > mFlingableValue && !isFling) {
                     // post一个任务，去自动滚动
@@ -317,8 +327,10 @@ public class CircleMenuLayout extends ViewGroup {
                     }
                     return true;
                 } else {
+                    //手指放开时纠偏一下
                     redress();
                 }
+
                 // 如果当前旋转角度超过NOCLICK_VALUE屏蔽点击
                 if (Math.abs(mTmpAngle) > NOCLICK_VALUE) {
                     return true;
@@ -333,16 +345,10 @@ public class CircleMenuLayout extends ViewGroup {
      */
     private void redress() {
         if (!((mStartAngle) % 60 < 30)) {
-//            mStartAngle = mStartAngle + 30 - (mStartAngle) % 60;
-//            requestLayout();
             double i = 30 - (mStartAngle) % 60;
-            System.out.println("+++++" + i);
             post(new AutoRedressRunnable(i, true));
         } else {
-//            mStartAngle = mStartAngle - ((mStartAngle) % 60 - 30);
-//            requestLayout();
             double j = (mStartAngle) % 60 - 30;
-            System.out.println("----" + j);
             post(new AutoRedressRunnable(j, false));
         }
     }
@@ -505,10 +511,17 @@ public class CircleMenuLayout extends ViewGroup {
             mStartAngle += (angelPerSecond / 30);
             // 逐渐减小这个值
             angelPerSecond /= 1.0666F;
+//            if (((int)Math.abs(mStartAngle) )% 60 == 0) {
+//                playSound();
+//            }
             postDelayed(this, 30);
             // 重新布局
             requestLayout();
         }
+    }
+
+    public void playSound() {
+        sp.play(music, 1, 1, 10, 0, 1);
     }
 
     /**
@@ -534,11 +547,8 @@ public class CircleMenuLayout extends ViewGroup {
             } else {
                 mStartAngle -= (Redressdegree / 10);
             }
-            Redressdegree_tem --;
-            System.out.println(Redressdegree_tem);
-            System.out.println("Redressdegree  " + Redressdegree);
-            System.out.println("mStartAngle  " + mStartAngle);
-            postDelayed(this, 3);
+            Redressdegree_tem--;
+            postDelayed(this, 30);
             // 重新布局
             requestLayout();
         }
