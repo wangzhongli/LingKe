@@ -295,7 +295,6 @@ public class CircleMenuLayout extends ViewGroup {
                     mStartAngle += start - end;
                     mTmpAngle += start - end;
                 }
-                System.out.println("mStartAngle   " + mStartAngle + "mTmpAngle   " + mTmpAngle);
                 // 重新布局
                 requestLayout();
                 mLastX = x;
@@ -317,6 +316,8 @@ public class CircleMenuLayout extends ViewGroup {
                         System.out.println("逆时针快速转动");
                     }
                     return true;
+                } else {
+                    redress();
                 }
                 // 如果当前旋转角度超过NOCLICK_VALUE屏蔽点击
                 if (Math.abs(mTmpAngle) > NOCLICK_VALUE) {
@@ -325,6 +326,25 @@ public class CircleMenuLayout extends ViewGroup {
                 break;
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    /**
+     * 纠偏 当滑动超过二分之一的时候转到下一格，反之上一格
+     */
+    private void redress() {
+        if (!((mStartAngle) % 60 < 30)) {
+//            mStartAngle = mStartAngle + 30 - (mStartAngle) % 60;
+//            requestLayout();
+            double i = 30 - (mStartAngle) % 60;
+            System.out.println("+++++" + i);
+            post(new AutoRedressRunnable(i, true));
+        } else {
+//            mStartAngle = mStartAngle - ((mStartAngle) % 60 - 30);
+//            requestLayout();
+            double j = (mStartAngle) % 60 - 30;
+            System.out.println("----" + j);
+            post(new AutoRedressRunnable(j, false));
+        }
     }
 
     /**
@@ -468,14 +488,16 @@ public class CircleMenuLayout extends ViewGroup {
     private class AutoFlingRunnable implements Runnable {
         private float angelPerSecond;
 
-        public AutoFlingRunnable(float velocity) {
-            this.angelPerSecond = velocity;
+        public AutoFlingRunnable(float angelPerSecond) {
+            this.angelPerSecond = angelPerSecond;
         }
 
         public void run() {
             // 如果小于20,则停止
             if ((int) Math.abs(angelPerSecond) < 20) {
                 isFling = false;
+                //自动滚动停止的时候，纠偏一次
+                redress();
                 return;
             }
             isFling = true;
@@ -484,6 +506,39 @@ public class CircleMenuLayout extends ViewGroup {
             // 逐渐减小这个值
             angelPerSecond /= 1.0666F;
             postDelayed(this, 30);
+            // 重新布局
+            requestLayout();
+        }
+    }
+
+    /**
+     * 自动纠偏的任务
+     */
+    private class AutoRedressRunnable implements Runnable {
+        private double Redressdegree;
+        private int Redressdegree_tem = 10;
+        private boolean flag;
+
+        public AutoRedressRunnable(double Redressdegree, boolean flag) {
+            this.Redressdegree = Redressdegree;
+            this.flag = flag;
+        }
+
+        public void run() {
+
+            if (Redressdegree_tem == 0) {
+                return;
+            }
+            if (flag) {
+                mStartAngle += (Redressdegree / 10);
+            } else {
+                mStartAngle -= (Redressdegree / 10);
+            }
+            Redressdegree_tem --;
+            System.out.println(Redressdegree_tem);
+            System.out.println("Redressdegree  " + Redressdegree);
+            System.out.println("mStartAngle  " + mStartAngle);
+            postDelayed(this, 3);
             // 重新布局
             requestLayout();
         }
@@ -504,7 +559,7 @@ public class CircleMenuLayout extends ViewGroup {
 //        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
 //        float tmpAngle = mTmpAngle;
         for (int i = 0; i < mMenuItemCount; i++) {
-            canvas.drawArc(rectF, i*sweepAngle, sweepAngle, true, paint);
+            canvas.drawArc(rectF, i * sweepAngle, sweepAngle, true, paint);
 //            canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
 //            tmpAngle += sweepAngle;
         }
