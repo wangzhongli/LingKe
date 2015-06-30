@@ -33,15 +33,15 @@ public class CircleMenuLayout extends ViewGroup {
     /**
      * 该容器内child item的默认尺寸
      */
-    private static final float RADIO_DEFAULT_CHILD_DIMENSION = 1 / 4f;
+    private static final float RADIO_DEFAULT_CHILD_DIMENSION = 1 / 5f;
     /**
      * 菜单的中心child的默认尺寸
      */
-    private float RADIO_DEFAULT_CENTERITEM_DIMENSION = 1 / 2.3f;
+    private float RADIO_DEFAULT_CENTERITEM_DIMENSION = 1 / 3f;
     /**
      * 该容器的内边距,无视padding属性，如需边距请用该变量
      */
-    private static final float RADIO_PADDING_LAYOUT = 1 / 36f;
+    private static final float RADIO_PADDING_LAYOUT = 1 / 48f;
 
     /**
      * 当每秒移动角度达到该值时，认为是快速移动
@@ -294,7 +294,7 @@ public class CircleMenuLayout extends ViewGroup {
                  * 获得当前的角度
                  */
                 float end = getAngle(x, y);
-                 Log.e("TAG", "start = " + start + " , end =" + end);
+                Log.e("TAG", "start = " + start + " , end =" + end);
                 // 如果是一、四象限，则直接end-start，角度值都是正值
                 if (getQuadrant(x, y) == 1 || getQuadrant(x, y) == 4) {
                     mStartAngle += end - start;
@@ -342,6 +342,7 @@ public class CircleMenuLayout extends ViewGroup {
 
     /**
      * 纠偏 当滑动超过二分之一的时候转到下一格，反之上一格
+     * 由于直接跳转比较死板，加了个自动任务，缓慢回弹
      */
     private void redress() {
         if (!((mStartAngle) % 60 < 30)) {
@@ -557,22 +558,45 @@ public class CircleMenuLayout extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(2);
-//        paint.setARGB(155, 167, 190, 206);
+        paint.setStrokeWidth(1);
+        paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
+        //画渐变色
+//        Shader mShader = new LinearGradient(0, 0, 100, 100,
+//                new int[]{Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW,
+//                        Color.LTGRAY}, null, Shader.TileMode.REPEAT); // 一个材质,打造出一个线性梯度沿著一条线。
+//        paint.setShader(mShader);
         RectF rectF = new RectF(0, 0, mRadius, mRadius);
-        canvas.drawCircle(resWidth / 2, resHeight / 2, 90, paint);
-        canvas.drawCircle(resWidth / 2, resHeight / 2, 105, paint);
+
+        Paint paint1 = new Paint();
+        paint1.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint1.setStrokeWidth(1);
+        paint1.setARGB(155, 167, 190, 206);
+
+        Paint paint2 = new Paint();
+        paint2.setStyle(Paint.Style.FILL);
+        paint2.setStrokeWidth(1);
+        paint2.setARGB(125, 167, 190, 206);
+
+        Paint paint3 = new Paint();
+        paint3.setStyle(Paint.Style.STROKE);
+        paint3.setStrokeWidth(1);
+        paint3.setARGB(255, 255, 255, 255);
+
+
         int sweepAngle = 360 / mMenuItemCount;
 //        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
-//        float tmpAngle = mTmpAngle;
+        float tmpAngle = (float) (mStartAngle - 30)%360;
         for (int i = 0; i < mMenuItemCount; i++) {
-            canvas.drawArc(rectF, i * sweepAngle, sweepAngle, true, paint);
-//            canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
-//            tmpAngle += sweepAngle;
+//            canvas.drawArc(rectF, i * sweepAngle, sweepAngle, true, paint);
+            canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
+            tmpAngle += sweepAngle;
         }
-
+        canvas.drawCircle(resWidth / 2, resHeight / 2, 90, paint2);
+        canvas.drawCircle(resWidth / 2, resHeight / 2, 95, paint1);
+        canvas.drawCircle(resWidth / 2, resHeight / 2, resHeight / 4, paint3);
     }
 }
