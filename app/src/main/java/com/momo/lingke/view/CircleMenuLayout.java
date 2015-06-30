@@ -502,10 +502,11 @@ public class CircleMenuLayout extends ViewGroup {
         canvas.drawCircle(resWidth / 2, resHeight / 2, 105, paint);
         int sweepAngle = 360 / mMenuItemCount;
 //        canvas.drawArc(rectF, (mMenuItemCount-2)* sweepAngle, sweepAngle, true, paint1);
-        float tmpAngle = mTmpAngle;
+//        float tmpAngle = mTmpAngle;
         for (int i = 0; i < mMenuItemCount; i++) {
-            canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
-            tmpAngle += sweepAngle;
+            canvas.drawArc(rectF, i*sweepAngle, sweepAngle, true, paint);
+//            canvas.drawArc(rectF, tmpAngle, sweepAngle, true, paint);
+//            tmpAngle += sweepAngle;
         }
 
     }
