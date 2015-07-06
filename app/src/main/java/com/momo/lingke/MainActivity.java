@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.momo.lingke.view.CircleMenuLayout;
 
 
-
 public class MainActivity extends AppCompatActivity {
     private CircleMenuLayout mCircleMenuLayout;
 
@@ -32,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
         mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener() {
             @Override
             public void itemClick(View view, int pos) {
-                Toast.makeText(MainActivity.this, mItemTexts[pos],
-                        Toast.LENGTH_SHORT).show();
+                action(pos);
             }
+
             @Override
             public void itemCenterClick(View view) {
                 Toast.makeText(MainActivity.this,
@@ -42,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void action(int pos) {
+        switch (pos) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
     }
 
     @Override
