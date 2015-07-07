@@ -1,16 +1,17 @@
-package com.momo.lingke;
+package com.momo.lingke.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.momo.lingke.R;
 import com.momo.lingke.view.CircleMenuLayout;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private CircleMenuLayout mCircleMenuLayout;
 
     private String[] mItemTexts = new String[]{"添加 ", "添加", "电话",
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
         mCircleMenuLayout = (CircleMenuLayout) findViewById(R.id.id_menulayout);
         mCircleMenuLayout.setMenuItemIconsAndTexts(mItemImgs, mItemTexts);
         mCircleMenuLayout.setOnMenuItemClickListener(new CircleMenuLayout.OnMenuItemClickListener() {
@@ -46,18 +46,44 @@ public class MainActivity extends AppCompatActivity {
     private void action(int pos) {
         switch (pos) {
             case 0:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
             case 1:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
             case 2:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
             case 3:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
             case 4:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
             case 5:
+                Toast.makeText(this, "pos" + pos, Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    /**
+     * 主界面
+     *
+     * @param view
+     */
+    public void clickMain(View view) {
+        Toast.makeText(this, "主界面", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, LauncherActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 点击设置
+     *
+     * @param view
+     */
+    public void clickSetting(View view) {
+        Toast.makeText(this, "设置吗", Toast.LENGTH_SHORT).show();
     }
 
     @Override
